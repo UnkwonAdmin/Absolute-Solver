@@ -1,0 +1,68 @@
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "DarkToggleGui"
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Main Frame
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 250, 0, 120)
+frame.Position = UDim2.new(0.5, -125, 0.5, -60)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 12)
+uiCorner.Parent = frame
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundTransparency = 1
+title.Text = "Fast Attack Toggle"
+title.TextColor3 = Color3.fromRGB(220, 220, 220)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 20
+title.Parent = frame
+
+-- Toggle Button
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 120, 0, 40)
+button.Position = UDim2.new(0.5, -60, 0.5, -20)
+button.BackgroundColor3 = Color3.fromRGB(150, 0, 0) -- default OFF (red)
+button.Text = "OFF"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.Gotham
+button.TextSize = 18
+button.Parent = frame
+
+local btnCorner = Instance.new("UICorner")
+btnCorner.CornerRadius = UDim.new(0, 8)
+btnCorner.Parent = button
+
+-- Toggle State
+local isOn = false
+
+-- Reference to your Configs table (must already exist in your script)
+-- Example:
+_G.Configs = _G.Configs or {}
+local Configs = _G.Configs
+
+-- Ensure Fast Attack is off at start
+Configs["Fast Attack"] = false
+
+-- Button Click
+button.MouseButton1Click:Connect(function()
+	isOn = not isOn
+	if isOn then
+		button.Text = "ON"
+		button.BackgroundColor3 = Color3.fromRGB(0, 170, 0) -- green when ON
+		Configs["Fast Attack"] = true
+		print("Fast Attack Enabled")
+	else
+		button.Text = "OFF"
+		button.BackgroundColor3 = Color3.fromRGB(150, 0, 0) -- red when OFF
+		Configs["Fast Attack"] = false
+		print("Fast Attack Disabled")
+	end
+end)
